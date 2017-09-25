@@ -44,4 +44,6 @@ J = scale * sum (first_term - second_term);
 %
 % =============================================================
 
+grad = scale * (X' * (h - y) );
+
 end
