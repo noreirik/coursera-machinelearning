@@ -8,6 +8,7 @@ function [J, grad] = lrCostFunction(theta, X, y, lambda)
 % Initialize some useful values
 m = length(y); % number of training examples
 scale = (1/m);
+regularization_scale = (lambda / (2*m));
 
 % You need to return the following variables correctly 
 J = 0;
@@ -34,6 +35,11 @@ first_term = log(h) .* -y;
 second_term = log(1 - h) .* (1-y);
 J = scale * sum (first_term - second_term);
 
+temp = theta;
+temp(1) = 0;
+
+J += (lambda / (2*m)) * sum(temp .^ 2);
+
 % Hint: When computing the gradient of the regularized cost function, 
 %       there're many possible vectorized solutions, but one solution
 %       looks like:
@@ -45,5 +51,6 @@ J = scale * sum (first_term - second_term);
 % =============================================================
 
 grad = scale * (X' * (h - y) );
+grad = grad + (lambda / m) * temp;
 
 end
